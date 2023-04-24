@@ -1,0 +1,128 @@
+.monaco-editor__react-wrapper {
+  position: relative;
+  box-sizing: content-box;
+  border-radius: 3px;
+  min-height: 100px;
+  border: 1px solid transparent;
+}
+
+.monaco-editor__react-wrapper:hover {
+  border-color: rgba(31, 56, 88, 0.1);
+}
+
+.monaco-editor__react-wrapper.ve-focused {
+  border-color: rgba(31, 56, 88, 0.15);
+}
+
+.monaco-editor__react-wrapper.ve-outline {
+  border: 1px solid vargba(31, 56, 88, 0.05) !important;
+}
+
+.monaco-editor__react-wrapper.fullscreen {
+  position: fixed !important;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100% !important;
+  z-index: 1000;
+}
+
+.monaco-editor__react-wrapper .editor-container {
+  position: relative;
+  min-height: 100px;
+  height: 100%;
+  width: 100%;
+  background: transparent;
+}
+
+.monaco-editor__react-wrapper .full-screen-icon,
+.monaco-editor__react-wrapper .full-screen-icon-cancel {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 1rem;
+  right: 1.2rem;
+  z-index: 9999;
+  cursor: pointer;
+}
+
+.monaco-editor__react-wrapper .editor-container .full-screen-icon svg,
+.monaco-editor__react-wrapper .editor-container .full-screen-icon-cancel svg {
+  color: #808080;
+}
+
+.monaco-editor__react-wrapper .editor-container.theme-vs-dark .full-screen-icon svg,
+.monaco-editor__react-wrapper .editor-container.theme-vs-dark .full-screen-icon-cancel svg {
+  color: #d5d5d5;
+}
+.monaco-editor__react-wrapper .editor-container.theme-vs-dark .full-screen-icon svg:hover,
+.monaco-editor__react-wrapper .editor-container.theme-vs-dark .full-screen-icon-cancel svg:hover {
+  color: #fff;
+}
+
+.monaco-editor__react-wrapper .loading {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  color: var(--color-text, rgba(0, 0, 0, 0.3));
+  background-color: transparent;
+}
+.monaco-editor__react-wrapper .loading::after {
+  width: 1em;
+  content: "";
+  display: inline;
+  animation: dots steps(3) 1s infinite;
+}
+
+.monaco-editor__react-wrapper .syntaxTips {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(255, 234, 234, 0.8);
+  color: red;
+  padding: 10px 30px;
+  margin: 0;
+  transition: 0.2s ease max-height;
+  max-height: 0;
+  box-sizing: border-box;
+}
+
+.monaco-editor__react-wrapper .syntaxTips:hover {
+  max-height: 50%;
+  overflow: auto;
+}
+
+.monaco-editor__react-wrapper .syntaxTips .infoIcon {
+  position: absolute;
+  width: 20px;
+  height: 16px;
+  top: 2px;
+  right: 5px;
+  transform: rotateY(180deg);
+}
+
+@keyframes dots {
+  0% {
+    content: ".";
+  }
+  20% {
+    content: "..";
+  }
+  40% {
+    content: "...";
+  }
+  60% {
+    content: "....";
+  }
+  80% {
+    content: ".....";
+  }
+}
