@@ -3,7 +3,7 @@ React component for MonacoEditor without needing to use webpack plugins
 
 ## Requirements
 React v16.x, v17.x, v18.x  
-** ⚠️ React.StrictMode not supported**
+⚠️ React.StrictMode not supported
 
 ## API
 
