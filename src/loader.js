@@ -13,6 +13,21 @@ const state = {
   monaco: null,
 };
 
+// This simple method can be used to add cancel to any promise
+const makeCancelable = (promise) => {
+  let hasCanceled_ = false;
+
+  const wrappedPromise = new Promise((resolve, reject) => {
+    promise.then(val => hasCanceled_ ? reject({
+      type: 'cancelation',
+      msg: 'operation is manually canceled',
+    }) : resolve(val));
+    promise.catch(reject);
+  });
+
+  return (wrappedPromise.cancel = () => (hasCanceled_ = true), wrappedPromise);
+}
+
 // functions compose
 const compose = (...fns) => {
   return (x) => fns.reduceRight((y, f) => f(y), x);
@@ -80,19 +95,19 @@ const loader = () => {
 
     if (state.monaco) {
       state.resolve(state.monaco);
-      return wrapperPromise;
+      return makeCancelable(wrapperPromise);
     }
 
     if (window.monaco && window.monaco.editor) {
       storeMonacoInstance(window.monaco);
       state.resolve(window.monaco);
-      return wrapperPromise;
+      return makeCancelable(wrapperPromise);
     }
 
     compose(injectScripts, getMonacoLoaderScript)(configureLoader);
   }
 
-  return wrapperPromise;
+  return makeCancelable(wrapperPromise);
 };
 
 export default loader;
