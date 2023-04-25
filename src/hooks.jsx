@@ -1,6 +1,7 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+
+import { DIFF_EDITOR_INITIAL_OPTIONS, INITIAL_OPTIONS } from "./helper";
 import loader from "./loader";
-import { INITIAL_OPTIONS, DIFF_EDITOR_INITIAL_OPTIONS } from "./helper";
 
 function getOrCreateModel(monaco, value, language, path) {
   if (path) {
@@ -68,31 +69,6 @@ export const useEditor = (type, props) => {
   const previousPath = usePrevious(path);
 
   useEffect(() => {
-    enhancersRef.current.enhancers = enhancers;
-  }, [enhancers]);
-
-  useEffect(() => {
-    editorDidMountRef.current = editorDidMount;
-  }, [editorDidMount]);
-
-  useEffect(() => {
-    editorWillMountRef.current = editorWillMount;
-  }, [editorWillMount]);
-
-  useEffect(() => {
-    valueRef.current = value;
-  }, [value]);
-
-  useEffect(() => {
-    languageRef.current = language;
-  }, [language]);
-
-  useEffect(() => {
-    defaultValueRef.current = defaultValue;
-  }, [defaultValue]);
-
-  // make sure loader / editor only init once
-  useEffect(() => {
     setLoading(true);
     loader()
       .then((monaco) => {
@@ -101,6 +77,11 @@ export const useEditor = (type, props) => {
           // make monaco-editor's loader work with webpack's umd loader
           // @see https://github.com/microsoft/monaco-editor/issues/2283
           delete window.define.amd;
+        }
+
+        // make sure loader editor only init once
+        if (monacoRef.current) {
+          return;
         }
 
         monacoRef.current = monaco;
@@ -136,8 +117,14 @@ export const useEditor = (type, props) => {
           );
           editor.setModel(model);
         } else {
-          const originalModel = monaco.editor.createModel(valueRef.current, languageRef.current);
-          const modifiedModel = monaco.editor.createModel(valueRef.current, languageRef.current);
+          const originalModel = monaco.editor.createModel(
+            valueRef.current,
+            languageRef.current,
+          );
+          const modifiedModel = monaco.editor.createModel(
+            valueRef.current,
+            languageRef.current,
+          );
 
           editor = monaco.editor.createDiffEditor(
             containerRef.current,
@@ -176,6 +163,30 @@ export const useEditor = (type, props) => {
   }, []);
 
   useEffect(() => {
+    enhancersRef.current.enhancers = enhancers;
+  }, [enhancers]);
+
+  useEffect(() => {
+    editorDidMountRef.current = editorDidMount;
+  }, [editorDidMount]);
+
+  useEffect(() => {
+    editorWillMountRef.current = editorWillMount;
+  }, [editorWillMount]);
+
+  useEffect(() => {
+    valueRef.current = value;
+  }, [value]);
+
+  useEffect(() => {
+    languageRef.current = language;
+  }, [language]);
+
+  useEffect(() => {
+    defaultValueRef.current = defaultValue;
+  }, [defaultValue]);
+
+  useEffect(() => {
     if (!isEditorReady) {
       return;
     }
@@ -189,9 +200,8 @@ export const useEditor = (type, props) => {
       return;
     }
 
-    const editor = type === "diff"
-      ? editorRef.current.getModifiedEditor()
-      : editorRef.current;
+    const editor =
+      type === "diff" ? editorRef.current.getModifiedEditor() : editorRef.current;
 
     if (editor) {
       editor.onDidFocusEditorText(() => {
@@ -213,7 +223,8 @@ export const useEditor = (type, props) => {
       return;
     }
 
-    const editor = type === "diff" ? editorRef.current.getModifiedEditor() : editorRef.current;
+    const editor =
+      type === "diff" ? editorRef.current.getModifiedEditor() : editorRef.current;
     const nextValue = value ?? defaultValueRef.current ?? "";
 
     if (editor) {
