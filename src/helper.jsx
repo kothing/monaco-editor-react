@@ -4,7 +4,7 @@ export const EDITOR_CDN_PATH_PARTIAL = "https://cdn.jsdelivr.net/npm/monaco-edit
 export const EDITOR_ALI_CDN_PATH_PARTIAL = "https://g.alicdn.com/code/lib/monaco-editor/0.36.1";
 
 export const INITIAL_OPTIONS = {
-  fontSize: 12,
+  fontSize: 13,
   tabSize: 2,
   fontFamily: "Menlo, Monaco, Courier New, monospace",
   folding: true,
@@ -31,7 +31,7 @@ export const INITIAL_OPTIONS = {
 };
 
 export const DIFF_EDITOR_INITIAL_OPTIONS = {
-  fontSize: 12,
+  fontSize: 13,
   fontFamily: "Menlo, Monaco, Courier New, monospace",
   folding: true,
   minimap: {
