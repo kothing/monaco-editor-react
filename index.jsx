@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createRef } from "react";
 import ReactDOM from "react-dom";
 import MonacoEditor from "./src";
 import "./index.less";
@@ -54,6 +54,9 @@ export default class App extends PureComponent {
   }
 }`;
 
+/**
+ * Editor
+ */
 export default class Editor extends React.Component {
   constructor(props) {
     super(props);
@@ -79,11 +82,37 @@ export default class Editor extends React.Component {
       },
       fileName: "a.json",
     };
+    this.prevHeight = createRef(0);
   }
 
-  editorDidMount(editor, monaco) {
+  editorDidMount(monaco, editor) {
     console.log("editorDidMount", editor, monaco);
-    editor.focus();
+
+    // Autho height
+    editor.onDidChangeModelDecorations(() => {
+      updateEditorHeight(); // typing
+      requestAnimationFrame(updateEditorHeight); // folding
+    });
+
+    const updateEditorHeight = () => {
+      const editorElement = editor.getDomNode();
+
+      if (!editorElement) {
+        return;
+      }
+
+      const lineHeight = editor.getOption(
+        monaco.editor.EditorOption.lineHeight
+      );
+      const lineCount = editor.getModel()?.getLineCount() || 1;
+      const height = editor.getTopForLineNumber(lineCount + 1) + lineHeight;
+
+      if (this.prevHeight.current !== height) {
+        this.prevHeight.current = height;
+        editorElement.style.height = `${height}px`;
+        editor.layout();
+      }
+    };
   }
 
   onChange(newValue, e) {
@@ -138,7 +167,7 @@ export default class Editor extends React.Component {
       <div className="editor-test">
         Basic Usage
         <MonacoEditor
-          height="500px"
+          // height={"200px"}
           language="javascript"
           editorDidMount={this.editorDidMount.bind(this)}
           onChange={this.onChange.bind(this)}
@@ -154,14 +183,15 @@ export default class Editor extends React.Component {
         <MonacoEditor.MonacoDiffEditor
           original={JSON.stringify({ a: 1 }, null, 2)}
           value={JSON.stringify({ b: 2 }, null, 2)}
-          height={100}
+          height={"100px"}
+          theme="light"
           language="json"
         />
         <br />
-        <hr />
+        {/* =====================================================
         <br />
         Controlled Value
-        <div>
+        <div className="controlled">
           <button
             onClick={() => {
               this.setValue('{ "a": 1 }');
@@ -203,10 +233,10 @@ export default class Editor extends React.Component {
           />
         </div>
         <br />
-        <hr />
+        =====================================================
         <br />
         Multi model
-        <div>
+        <div className="multi">
           {Object.keys(files).map((key) => (
             <button
               key={key}
@@ -236,7 +266,7 @@ export default class Editor extends React.Component {
               }));
             }}
           />
-        </div>
+        </div> */}
       </div>
     );
   }

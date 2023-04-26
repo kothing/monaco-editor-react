@@ -35,7 +35,7 @@ export const DIFF_EDITOR_INITIAL_OPTIONS = {
   fontFamily: "Menlo, Monaco, Courier New, monospace",
   folding: true,
   minimap: {
-    enabled: true,
+    enabled: false,
   },
   autoIndent: "advanced",
   contextmenu: true,
@@ -59,9 +59,9 @@ export const EDITOR_WRAPPER_CLASS = "monaco-editor-react-wrapper";
 
 export const EDITOR_CONTAINER_CLASS = "editor-container";
 
-export const CURRENT_LANGUAGE = (window.locale || window.localStorage.getItem("vdev-locale") || "").replace(/_/, "-") || "zh-CN";
+export const CURRENT_LANGUAGE = (navigator.language || navigator.browserLanguage).toLowerCase().indexOf('zh') > -1 ? "zh-CN" : "en";
 
-export const EDITOR_INITIALIZING_WORD = CURRENT_LANGUAGE === "en-US" ? "Initializing Editor" : "编辑器初始化中";
+export const EDITOR_INITIALIZING_WORD = CURRENT_LANGUAGE === "en" ? "Initializing Editor" : "编辑器初始化中";
 
 export const ICON = {
   max: (

@@ -11,7 +11,11 @@ function getOrCreateModel(monaco, value, language, path) {
     }
   }
 
-  return monaco.editor.createModel(value, language, path && monaco.Uri.parse(path));
+  return monaco.editor.createModel(
+    value,
+    language,
+    path && monaco.Uri.parse(path)
+  );
 }
 
 /**
@@ -104,7 +108,7 @@ export const useEditor = (type, props) => {
             monaco,
             valueRef.current ?? defaultValueRef.current ?? "",
             languageRef.current,
-            pathRef.current,
+            pathRef.current
           );
           editor = monaco.editor.create(
             containerRef.current,
@@ -113,17 +117,17 @@ export const useEditor = (type, props) => {
               ...INITIAL_OPTIONS,
               ...optionRef.current,
             },
-            overrideServices,
+            overrideServices
           );
           editor.setModel(model);
         } else {
           const originalModel = monaco.editor.createModel(
             valueRef.current,
-            languageRef.current,
+            languageRef.current
           );
           const modifiedModel = monaco.editor.createModel(
             valueRef.current,
-            languageRef.current,
+            languageRef.current
           );
 
           editor = monaco.editor.createDiffEditor(
@@ -133,13 +137,15 @@ export const useEditor = (type, props) => {
               ...DIFF_EDITOR_INITIAL_OPTIONS,
               ...optionRef.current,
             },
-            overrideServices,
+            overrideServices
           );
 
           editor.setModel({ original: originalModel, modified: modifiedModel });
         }
         editorRef.current = editor;
-        (enhancersRef.current.enhancers || []).forEach((en) => en(monaco, editor));
+        (enhancersRef.current.enhancers || []).forEach((en) =>
+          en(monaco, editor)
+        );
         try {
           if (editorDidMountRef.current) {
             editorDidMountRef.current(monaco, editor);
@@ -201,7 +207,9 @@ export const useEditor = (type, props) => {
     }
 
     const editor =
-      type === "diff" ? editorRef.current.getModifiedEditor() : editorRef.current;
+      type === "diff"
+        ? editorRef.current.getModifiedEditor()
+        : editorRef.current;
 
     if (editor) {
       editor.onDidFocusEditorText(() => {
@@ -224,7 +232,9 @@ export const useEditor = (type, props) => {
     }
 
     const editor =
-      type === "diff" ? editorRef.current.getModifiedEditor() : editorRef.current;
+      type === "diff"
+        ? editorRef.current.getModifiedEditor()
+        : editorRef.current;
     const nextValue = value ?? defaultValueRef.current ?? "";
 
     if (editor) {
@@ -261,7 +271,7 @@ export const useEditor = (type, props) => {
       monacoRef.current,
       valueRef.current ?? defaultValueRef.current,
       languageRef.current,
-      path,
+      path
     );
 
     const editor = editorRef.current;
@@ -273,7 +283,8 @@ export const useEditor = (type, props) => {
       model.setValue(valueRef.current);
     }
     if (model !== editorRef.current.getModel()) {
-      saveViewState && viewStatusRef.current.set(previousPath, editor.saveViewState());
+      saveViewState &&
+        viewStatusRef.current.set(previousPath, editor.saveViewState());
       editor.setModel(model);
       saveViewState && editor.restoreViewState(viewStatusRef.current.get(path));
     }

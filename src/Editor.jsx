@@ -2,7 +2,12 @@ import * as React from "react";
 import { useRef, useEffect, useMemo, useState } from "react";
 import classNames from "classnames";
 import { useEditor } from "./hooks";
-import { EDITOR_WRAPPER_CLASS, EDITOR_INITIALIZING_WORD, EDITOR_CONTAINER_CLASS, ICON } from "./helper";
+import {
+  EDITOR_WRAPPER_CLASS,
+  EDITOR_CONTAINER_CLASS,
+  EDITOR_INITIALIZING_WORD,
+  ICON,
+} from "./helper";
 import "./style.css";
 
 /**
@@ -11,14 +16,22 @@ import "./style.css";
  * @returns
  */
 export const BaseEditor = (props) => {
-  const { onChange, enableOutline, width, height, language, theme, supportFullScreen } = props;
+  const {
+    onChange,
+    enableOutline,
+    width,
+    height,
+    language,
+    theme,
+    supportFullScreen,
+  } = props;
 
   const onChangeRef = useRef(onChange);
   const subscriptionRef = useRef(null);
-  const originScreenSizeRef = useRef({});
-  const fullscreenStatusRef = useRef(false);
+  const originSizeRef = useRef({});
+  const fullScreenStatusRef = useRef(false);
 
-  const [isFullScreen, setIsFullScreen] = useState(fullscreenStatusRef.current || false);
+  const [isFullScreen, setIsFullScreen] = useState(false);
 
   const {
     isEditorReady,
@@ -46,11 +59,36 @@ export const BaseEditor = (props) => {
   });
 
   const style = useMemo(() => {
-    return {
-      width,
-      height,
-    };
-  }, [width, height]);
+    return isFullScreen
+      ? {
+          width: "100%",
+          height: "100vh",
+        }
+      : {
+          width,
+          height,
+        };
+  }, [width, height, isFullScreen]);
+
+  const setEditorHeight = () => {
+    if (fullScreenStatusRef.current) {
+      const editorInstance = editorRef.current;
+      const editorElement = editorInstance?.getDomNode();
+
+      if (!editorElement) {
+        return;
+      }
+
+      editorElement.style.height = `${window.innerHeight}px`;
+      editorInstance?.layout();
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", setEditorHeight);
+
+    return () => window.removeEventListener("resize", setEditorHeight);
+  }, []);
 
   useEffect(() => {
     onChangeRef.current = onChange;
@@ -59,70 +97,65 @@ export const BaseEditor = (props) => {
   useEffect(() => {
     if (isEditorReady) {
       const editorInstance = editorRef.current;
+
       if (subscriptionRef.current) {
         subscriptionRef.current.dispose();
       }
-      subscriptionRef.current = editorInstance?.onDidChangeModelContent((event) => {
-        const editorValue = editorInstance?.getModel().getValue();
-        if (valueRef.current !== editorValue) {
-          if (onChangeRef.current) {
-            onChangeRef.current(editorValue, event);
+
+      subscriptionRef.current = editorInstance?.onDidChangeModelContent(
+        (event) => {
+          const editorValue = editorInstance?.getModel().getValue();
+          if (valueRef.current !== editorValue) {
+            if (onChangeRef.current) {
+              onChangeRef.current(editorValue, event);
+            }
           }
         }
-      });
+      );
     }
-  }, [editorRef, isEditorReady, subscriptionRef, valueRef]);
+  }, [isEditorReady]);
 
   useEffect(() => {
-    const editorInstance = editorRef.current;
-    return () => {
-      if (subscriptionRef.current) {
-        subscriptionRef.current.dispose();
-      }
-      if (editorInstance) {
-        editorInstance.getModel().dispose();
-        editorInstance.dispose();
-      }
-    };
-  }, [editorRef]);
-
-  useEffect(() => {
-    if (!isEditorReady) {
-      return;
+    if (isEditorReady && monacoRef.current) {
+      monacoRef.current.editor.setModelLanguage(
+        editorRef.current?.getModel(),
+        language
+      );
     }
-    if (monacoRef.current) {
-      monacoRef.current.editor.setModelLanguage(editorRef.current?.getModel(), language);
-    }
-  }, [editorRef, isEditorReady, language, monacoRef]);
+  }, [isEditorReady, language]);
 
   const handleFullScreen = (sizeMode) => {
-    const editorWrapper = document.getElementsByClassName(EDITOR_WRAPPER_CLASS)[0];
     const editorInstance = editorRef.current;
-
-    setIsFullScreen(sizeMode === "max");
-    fullscreenStatusRef.current = sizeMode === "max";
+    const editorWrapper =
+      document.getElementsByClassName(EDITOR_WRAPPER_CLASS)[0];
 
     if (sizeMode === "max") {
-      originScreenSizeRef.current = {
+      setIsFullScreen(true);
+      fullScreenStatusRef.current = true;
+      originSizeRef.current = {
         width: editorWrapper.clientWidth,
         height: editorWrapper.clientHeight,
       };
-      editorInstance.layout({
-        height: document.body.clientHeight,
-        width: document.body.clientWidth,
+      editorInstance.updateOptions({
+        ...editorInstance?.getOptions(),
       });
-      editorWrapper.classList.add("fullscreen");
+      editorInstance.layout({
+        height: window.innerHeight || document.documentElement.offsetHeight,
+        width: window.innerWidth || document.documentElement.offsetWidth,
+      });
+      document.body.classList.add("fullScreen-overflow-hidden");
     } else if (sizeMode === "min") {
-      editorInstance.layout({
-        height: originScreenSizeRef.current?.height || editorWrapper.clientWidth,
-        width: originScreenSizeRef.current?.width || editorWrapper.clientHeight,
+      setIsFullScreen(false);
+      fullScreenStatusRef.current = false;
+      editorInstance.updateOptions({
+        ...editorInstance?.getOptions(),
       });
-      editorWrapper.classList.remove("fullscreen");
+      editorInstance.layout({
+        height: originSizeRef.current?.height || editorWrapper.clientWidth,
+        width: originSizeRef.current?.width || editorWrapper.clientHeight,
+      });
+      document.body.classList.remove("fullScreen-overflow-hidden");
     }
-
-    editorInstance.updateOptions({
-      ...editorInstance?.getOptions(),
-    });
   };
 
   return (
@@ -142,7 +175,6 @@ export const BaseEditor = (props) => {
   );
 };
 
-
 /**
  * DiffEditor
  * @param {*} props
@@ -151,7 +183,14 @@ export const BaseEditor = (props) => {
 export const DiffEditor = (props) => {
   const { enableOutline, width, height, language, theme, original } = props;
 
-  const { isEditorReady, focused, loading, containerRef, monacoRef, editorRef } = useEditor("diff", props);
+  const {
+    isEditorReady,
+    focused,
+    loading,
+    containerRef,
+    monacoRef,
+    editorRef,
+  } = useEditor("diff", props);
 
   const wrapperClassName = classNames(EDITOR_WRAPPER_CLASS, props.className, {
     "ve-focused": focused,
@@ -190,7 +229,8 @@ export const DiffEditor = (props) => {
       return;
     }
 
-    const { original: originalModel, modified: modifiedModel } = editorRef.current?.getModel();
+    const { original: originalModel, modified: modifiedModel } =
+      editorRef.current.getModel();
 
     if (monacoRef.current) {
       monacoRef.current.editor.setModelLanguage(originalModel, language);

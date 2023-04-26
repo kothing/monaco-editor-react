@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { BaseEditor, DiffEditor } from "./Editor";
 import { INITIAL_OPTIONS } from "./helper";
 
@@ -7,7 +8,7 @@ const MonacoDiffEditor = Object.assign(DiffEditor, {
   displayName: "DiffMonacoEditor",
   defaultProps: {
     width: "100%",
-    height: 150,
+    height: "200px",
     defaultValue: "",
     language: "javascript",
     theme: "vs-dark",
@@ -22,7 +23,7 @@ const MonacoEditor = Object.assign(BaseEditor, {
   displayName: "MonacoEditor",
   defaultProps: {
     width: "100%",
-    height: 150,
+    height: "200px",
     defaultValue: "",
     language: "javascript",
     theme: "vs-dark",

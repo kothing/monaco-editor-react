@@ -29,16 +29,13 @@
   z-index: 1000;
 }
 
-.monaco-editor-react-wrapper.fullscreen .editor-container {
-  height: 100vh;
-}
-
 .monaco-editor-react-wrapper .editor-container {
   position: relative;
   min-height: 100px;
   height: 100%;
   width: 100%;
   background: transparent;
+  overflow: hidden;
 }
 
 .monaco-editor-react-wrapper .full-screen-icon,
@@ -46,8 +43,8 @@
   width: 20px;
   height: 20px;
   position: absolute;
-  top: 1rem;
-  right: 1.2rem;
+  top: 8px;
+  right: 24px;
   z-index: 9999;
   cursor: pointer;
 }
@@ -123,6 +120,10 @@
   top: 2px;
   right: 5px;
   transform: rotateY(180deg);
+}
+
+body.fullScreen-overflow-hidden {
+  overflow: hidden;
 }
 
 @keyframes dots {

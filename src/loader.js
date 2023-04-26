@@ -18,15 +18,19 @@ const makeCancelable = (promise) => {
   let hasCanceled_ = false;
 
   const wrappedPromise = new Promise((resolve, reject) => {
-    promise.then(val => hasCanceled_ ? reject({
-      type: 'cancelation',
-      msg: 'operation is manually canceled',
-    }) : resolve(val));
+    promise.then((val) =>
+      hasCanceled_
+        ? reject({
+            type: "cancelation",
+            msg: "operation is manually canceled",
+          })
+        : resolve(val)
+    );
     promise.catch(reject);
   });
 
-  return (wrappedPromise.cancel = () => (hasCanceled_ = true), wrappedPromise);
-}
+  return (wrappedPromise.cancel = () => (hasCanceled_ = true)), wrappedPromise;
+};
 
 // functions compose
 const compose = (...fns) => {
