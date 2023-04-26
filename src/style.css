@@ -15,7 +15,7 @@
 }
 
 .monaco-editor__react-wrapper.ve-outline {
-  border: 1px solid vargba(31, 56, 88, 0.05) !important;
+  border: 1px solid rgba(31, 56, 88, 0.05) !important;
 }
 
 .monaco-editor__react-wrapper.fullscreen {
@@ -35,6 +35,9 @@
   height: 100%;
   width: 100%;
   background: transparent;
+}
+.monaco-editor__react-wrapper.fullscreen .editor-container {
+  height: 100vh;
 }
 
 .monaco-editor__react-wrapper .full-screen-icon,
