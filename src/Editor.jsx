@@ -2,7 +2,7 @@ import * as React from "react";
 import { useRef, useEffect, useMemo, useState } from "react";
 import classNames from "classnames";
 import { useEditor } from "./hooks";
-import { EDITOR_WRAPPER_CLASS, EDITOR_INITIALIZING_WORD, ICON } from "./helper";
+import { EDITOR_WRAPPER_CLASS, EDITOR_INITIALIZING_WORD, EDITOR_CONTAINER_CLASS, ICON } from "./helper";
 import "./style.css";
 
 /**
@@ -36,7 +36,7 @@ export const BaseEditor = (props) => {
     fullscreen: isFullScreen,
   });
 
-  const containerClassName = classNames("editor-container", {
+  const containerClassName = classNames(EDITOR_CONTAINER_CLASS, {
     [`theme-${theme}`]: theme,
   });
 
@@ -158,7 +158,7 @@ export const DiffEditor = (props) => {
     "ve-outline": enableOutline,
   });
 
-  const containerClassName = classNames("editor-container", "editor-diff", {
+  const containerClassName = classNames(EDITOR_CONTAINER_CLASS, "editor-diff", {
     [`theme-${theme}`]: theme,
   });
 
