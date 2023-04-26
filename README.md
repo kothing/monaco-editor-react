@@ -15,7 +15,6 @@ React v16.x, v17.x, v18.x
 | theme | theme of the editor, `"light" | "vs-dark"` | `string` |
 | options | [Monaco editor options](https://microsoft.github.io/monaco-editor/) | `Record<string, any>` |
 | path | path of the current model, useful when creating a multi-model editor | `string` |
-| saveViewState | whether to save the models' view states between model changes or not | `boolean` |
 | className | className of wrapper | `string` |
 | width | width of wrapper | `number | string` |
 | height | height of wrapper | `number | string` |
