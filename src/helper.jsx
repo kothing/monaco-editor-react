@@ -55,7 +55,7 @@ export const DIFF_EDITOR_INITIAL_OPTIONS = {
   },
 };
 
-export const EDITOR_WRAPPER_CLASS = "monaco-editor__react-wrapper";
+export const EDITOR_WRAPPER_CLASS = "monaco-editor-react-wrapper";
 
 export const CURRENT_LANGUAGE = (window.locale || window.localStorage.getItem("vdev-locale") || "").replace(/_/, "-") || "zh-CN";
 
