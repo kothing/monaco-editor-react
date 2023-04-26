@@ -34,6 +34,7 @@ React v16.x, v17.x, v18.x
   onChange={(next) => {
     setValue(next);
   }}
+  height="300px"
   supportFullScreen={true}
 />
 ```
@@ -44,7 +45,7 @@ React v16.x, v17.x, v18.x
 <MonacoEditor.MonacoDiffEditor
   original={JSON.stringify({a: 1}, null, 2)}
   value={JSON.stringify({b: 2}, null, 2)}
-  height={100}
+  height="100px"
   language="json"
 />
 ```
@@ -91,7 +92,7 @@ function App() {
         </button>
       ))}
       <MonacoEditor
-        height={40}
+        height={"400px"}
         path={file.name}
         language={file.language}
         defaultValue={file.value}
