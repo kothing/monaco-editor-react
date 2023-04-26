@@ -12,7 +12,7 @@ React v16.x, v17.x, v18.x
 | value | value | `string` |
 | defaultValue | defaultValue for creating model | `string` |
 | language | language of the editor | `string` |
-| theme | theme of the editor, `"light" | "vs-dark"` | `string` |
+| theme | theme of the editor, `"light" "vs-dark"` | `string` |
 | options | [Monaco editor options](https://microsoft.github.io/monaco-editor/) | `Record<string, any>` |
 | path | path of the current model, useful when creating a multi-model editor | `string` |
 | className | className of wrapper | `string` |
