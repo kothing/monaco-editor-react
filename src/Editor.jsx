@@ -36,7 +36,7 @@ export const BaseEditor = (props) => {
     fullscreen: isFullScreen,
   });
 
-  const editorClassName = classNames("editor-container", {
+  const containerClassName = classNames("editor-container", {
     [`theme-${theme}`]: theme,
   });
 
@@ -128,7 +128,7 @@ export const BaseEditor = (props) => {
   return (
     <div className={wrapperClassName} style={props.style}>
       {loading && <span className="loading">{EDITOR_INITIALIZING_WORD}</span>}
-      <div ref={containerRef} className={editorClassName} style={style}>
+      <div ref={containerRef} className={containerClassName} style={style}>
         {supportFullScreen && (
           <div
             className={fullScreenClassName}
@@ -158,7 +158,7 @@ export const DiffEditor = (props) => {
     "ve-outline": enableOutline,
   });
 
-  const editorClassName = classNames("editor-container", "editor-diff", {
+  const containerClassName = classNames("editor-container", "editor-diff", {
     [`theme-${theme}`]: theme,
   });
 
@@ -201,7 +201,7 @@ export const DiffEditor = (props) => {
   return (
     <div className={wrapperClassName} style={props.style}>
       {loading && <span className="loading">{EDITOR_INITIALIZING_WORD}</span>}
-      <div ref={containerRef} className={editorClassName} style={style} />
+      <div ref={containerRef} className={containerClassName} style={style} />
     </div>
   );
 };
