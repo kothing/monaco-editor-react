@@ -16,8 +16,8 @@ React v16.x, v17.x, v18.x
 | options | [Monaco editor options](https://microsoft.github.io/monaco-editor/) | `Record<string, any>` |
 | path | path of the current model, useful when creating a multi-model editor | `string` |
 | className | className of wrapper | `string` |
-| width | width of wrapper | `number | string` |
-| height | height of wrapper | `number | string` |
+| width | width of wrapper | `number` or `string` |
+| height | height of wrapper | `number` or `string` |
 | enableOutline | whether to enable outline of wrapper or not | `boolean` |
 | style | style of wrapper | `CSSProperties` |
 | editorWillMount | callback after monaco's loaded and before editor's loaded | `(monaco: IMonacoInstance) => void` |
