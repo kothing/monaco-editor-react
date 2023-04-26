@@ -1,4 +1,4 @@
-.monaco-editor__react-wrapper {
+.monaco-editor-react-wrapper {
   position: relative;
   box-sizing: content-box;
   border-radius: 3px;
@@ -6,19 +6,19 @@
   border: 1px solid transparent;
 }
 
-.monaco-editor__react-wrapper:hover {
+.monaco-editor-react-wrapper:hover {
   border-color: rgba(31, 56, 88, 0.1);
 }
 
-.monaco-editor__react-wrapper.ve-focused {
+.monaco-editor-react-wrapper.ve-focused {
   border-color: rgba(31, 56, 88, 0.15);
 }
 
-.monaco-editor__react-wrapper.ve-outline {
+.monaco-editor-react-wrapper.ve-outline {
   border: 1px solid rgba(31, 56, 88, 0.05) !important;
 }
 
-.monaco-editor__react-wrapper.fullscreen {
+.monaco-editor-react-wrapper.fullscreen {
   position: fixed !important;
   top: 0;
   right: 0;
@@ -29,19 +29,20 @@
   z-index: 1000;
 }
 
-.monaco-editor__react-wrapper .editor-container {
+.monaco-editor-react-wrapper.fullscreen .editor-container {
+  height: 100vh;
+}
+
+.monaco-editor-react-wrapper .editor-container {
   position: relative;
   min-height: 100px;
   height: 100%;
   width: 100%;
   background: transparent;
 }
-.monaco-editor__react-wrapper.fullscreen .editor-container {
-  height: 100vh;
-}
 
-.monaco-editor__react-wrapper .full-screen-icon,
-.monaco-editor__react-wrapper .full-screen-icon-cancel {
+.monaco-editor-react-wrapper .full-screen-icon,
+.monaco-editor-react-wrapper .full-screen-icon-cancel {
   width: 20px;
   height: 20px;
   position: absolute;
@@ -51,21 +52,33 @@
   cursor: pointer;
 }
 
-.monaco-editor__react-wrapper .editor-container .full-screen-icon svg,
-.monaco-editor__react-wrapper .editor-container .full-screen-icon-cancel svg {
+.monaco-editor-react-wrapper .editor-container .full-screen-icon svg,
+.monaco-editor-react-wrapper .editor-container .full-screen-icon-cancel svg {
   color: #808080;
 }
 
-.monaco-editor__react-wrapper .editor-container.theme-vs-dark .full-screen-icon svg,
-.monaco-editor__react-wrapper .editor-container.theme-vs-dark .full-screen-icon-cancel svg {
+.monaco-editor-react-wrapper
+  .editor-container.theme-vs-dark
+  .full-screen-icon
+  svg,
+.monaco-editor-react-wrapper
+  .editor-container.theme-vs-dark
+  .full-screen-icon-cancel
+  svg {
   color: #d5d5d5;
 }
-.monaco-editor__react-wrapper .editor-container.theme-vs-dark .full-screen-icon svg:hover,
-.monaco-editor__react-wrapper .editor-container.theme-vs-dark .full-screen-icon-cancel svg:hover {
+.monaco-editor-react-wrapper
+  .editor-container.theme-vs-dark
+  .full-screen-icon
+  svg:hover,
+.monaco-editor-react-wrapper
+  .editor-container.theme-vs-dark
+  .full-screen-icon-cancel
+  svg:hover {
   color: #fff;
 }
 
-.monaco-editor__react-wrapper .loading {
+.monaco-editor-react-wrapper .loading {
   position: absolute;
   display: flex;
   align-items: center;
@@ -77,14 +90,14 @@
   color: var(--color-text, rgba(0, 0, 0, 0.3));
   background-color: transparent;
 }
-.monaco-editor__react-wrapper .loading::after {
+.monaco-editor-react-wrapper .loading::after {
   width: 1em;
   content: "";
   display: inline;
   animation: dots steps(3) 1s infinite;
 }
 
-.monaco-editor__react-wrapper .syntaxTips {
+.monaco-editor-react-wrapper .syntaxTips {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -98,12 +111,12 @@
   box-sizing: border-box;
 }
 
-.monaco-editor__react-wrapper .syntaxTips:hover {
+.monaco-editor-react-wrapper .syntaxTips:hover {
   max-height: 50%;
   overflow: auto;
 }
 
-.monaco-editor__react-wrapper .syntaxTips .infoIcon {
+.monaco-editor-react-wrapper .syntaxTips .infoIcon {
   position: absolute;
   width: 20px;
   height: 16px;
