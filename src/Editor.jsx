@@ -56,7 +56,7 @@ export const BaseEditor = (props) => {
   const getThemeByDom = () => {
     let _theme = "";
     if (editorRef.current) {
-      const editorDomNode = editorRef.current?.getDomNode();
+      const editorDomNode = editorRef.current.getDomNode();
       if (editorDomNode.classList.contains("vs")) {
         _theme = "vs";
       } else if (editorDomNode.classList.contains("vs-dark")) {
