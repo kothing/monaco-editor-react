@@ -223,7 +223,17 @@ export const DiffEditor = (props) => {
       return;
     }
     editorRef.current.getModel().original.setValue(original ?? "");
-  }, [editorRef, isEditorReady, original]);
+  }, [isEditorReady, original]);
+
+  useEffect(() => {
+    if (!isEditorReady) {
+      return;
+    }
+    const modifiedEditor = editorRef.current.getModifiedEditor();
+    if (modifiedEditor.getOption(monacoRef.current.editor.EditorOption.readOnly)) {
+      modifiedEditor.setValue(value || "");
+    }
+  }, [isEditorReady, value]);
 
   useEffect(() => {
     const editorInstance = editorRef.current;
@@ -251,7 +261,7 @@ export const DiffEditor = (props) => {
       monacoRef.current.editor.setModelLanguage(originalModel, language);
       monacoRef.current.editor.setModelLanguage(modifiedModel, language);
     }
-  }, [editorRef, isEditorReady, language, monacoRef]);
+  }, [isEditorReady, language]);
 
   return (
     <div className={wrapperClassName} style={props.style}>
