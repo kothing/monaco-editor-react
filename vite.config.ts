@@ -27,7 +27,7 @@ module.exports = defineConfig({
     lib: {
       entry: path.resolve(__dirname, "src/index.jsx"),
       name: getPackageNameCamelCase(),
-      formats: ["es", "cjs", "iife"],
+      formats: ["es", "cjs", "iife", "umd"],
       fileName: (format) => fileName[format],
     },
     rollupOptions: {
