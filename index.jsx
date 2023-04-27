@@ -42,12 +42,12 @@ export default class App extends PureComponent {
       <MonacoEditor
         language="html"
         value="<h1>I  react-monaco-editor</h1>"
+        theme="vs-dark",
         options={{
           selectOnLineNumbers: true,
           roundedSelection: false,
           cursorStyle: 'line',
           automaticLayout: false,
-          theme: 'vs-dark',
         }}
       />
     );
@@ -140,7 +140,6 @@ export default class Editor extends React.Component {
       readOnly: false,
       cursorStyle: "line",
       automaticLayout: false,
-      theme: "vs-dark",
       fontSize: "14px",
       scrollbar: {
         // Subtle shadows to the left & top. Defaults to true.
@@ -173,7 +172,7 @@ export default class Editor extends React.Component {
           onChange={this.onChange.bind(this)}
           value={code}
           options={options}
-          theme="light" // "vs-dark"
+          theme="vs" // "vs-dark"
           supportFullScreen
         />
         <br />
