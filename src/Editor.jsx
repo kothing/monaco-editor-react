@@ -219,6 +219,20 @@ export const DiffEditor = (props) => {
   const style = useMemo(() => ({ width, height }), [width, height]);
 
   useEffect(() => {
+    const editorInstance = editorRef.current;
+    return () => {
+      if (editorInstance) {
+        const md = editorInstance.getModel();
+        if (md) {
+          md.original.dispose();
+          md.modified.dispose();
+        }
+        editorInstance.dispose();
+      }
+    };
+  }, []);
+
+  useEffect(() => {
     if (!isEditorReady) {
       return;
     }
@@ -234,20 +248,6 @@ export const DiffEditor = (props) => {
       modifiedEditor.setValue(value || "");
     }
   }, [isEditorReady, value]);
-
-  useEffect(() => {
-    const editorInstance = editorRef.current;
-    return () => {
-      if (editorInstance) {
-        const md = editorInstance.getModel();
-        if (md) {
-          md.original.dispose();
-          md.modified.dispose();
-        }
-        editorInstance.dispose();
-      }
-    };
-  }, [editorRef]);
 
   useEffect(() => {
     if (!isEditorReady) {
