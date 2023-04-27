@@ -19,6 +19,7 @@ const fileName = {
   es: `${getPackageName()}.mjs`,
   cjs: `${getPackageName()}.cjs`,
   iife: `${getPackageName()}.iife.js`,
+  umd: `${getPackageName()}.umd.js`,
 };
 
 module.exports = defineConfig({
@@ -31,7 +32,7 @@ module.exports = defineConfig({
       fileName: (format) => fileName[format],
     },
     rollupOptions: {
-      output: { assetFileNames: `${getPackageNameCamelCase()}.[ext]` },
+      output: { assetFileNames: `${getPackageName()}.[ext]` },
     },
   },
   plugins: [
