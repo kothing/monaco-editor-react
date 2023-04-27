@@ -32,7 +32,7 @@ const MonacoEditor = Object.assign(BaseEditor, {
     editorWillMount: noop,
     onChange: noop,
   },
-  MonacoDiffEditor,
+  DiffEditor: MonacoDiffEditor,
 });
 
 export default MonacoEditor;
