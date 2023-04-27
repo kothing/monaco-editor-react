@@ -1,3 +1,5 @@
+import * as React from "react";
+
 export const EDITOR_CDN_PATH_PARTIAL = "https://cdn.jsdelivr.net/npm/monaco-editor@0.36.1";
 
 export const EDITOR_ALI_CDN_PATH_PARTIAL = "https://g.alicdn.com/code/lib/monaco-editor/0.36.1";
