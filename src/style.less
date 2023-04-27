@@ -1,0 +1,147 @@
+.monaco-editor-react-wrapper {
+  position: relative;
+  box-sizing: content-box;
+  border-radius: 3px;
+  min-height: 100px;
+  border: 1px solid transparent;
+
+  &:hover {
+    border-color: rgba(31, 56, 88, 0.1);
+  }
+
+  &.ve-focused {
+    border-color: rgba(31, 56, 88, 0.15);
+  }
+
+  &.ve-outline {
+    border: 1px solid rgba(31, 56, 88, 0.05) !important;
+  }
+
+  &.fullscreen {
+    position: fixed !important;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100% !important;
+    z-index: 1000;
+  }
+
+  .loading {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    color: rgba(0, 0, 0, 0.5);
+    background-color: transparent;
+  }
+  .loading::after {
+    width: 1em;
+    content: "";
+    display: inline;
+    animation: dots steps(3) 1s infinite;
+  }
+
+  .editor-container {
+    position: relative;
+    min-height: 100px;
+    height: 100%;
+    width: 100%;
+    background: transparent;
+    overflow: hidden;
+
+    .full-screen-icon,
+    .full-screen-icon-cancel {
+      position: absolute;
+      top: 1rem;
+      right: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      z-index: 9999;
+      cursor: pointer;
+    }
+
+    .full-screen-icon svg,
+    .full-screen-icon-cancel svg,
+    .full-screen-icon.vs svg,
+    .full-screen-icon-cancel.vs svg,
+    .full-screen-icon.hc-light svg,
+    .full-screen-icon-cancel.hc-light svg {
+      color: #353535;
+    }
+
+    .full-screen-icon.vs-dark svg,
+    .full-screen-icon-cancel.vs-dark svg,
+    .full-screen-icon.hc-black svg,
+    .full-screen-icon-cancel.hc-black svg {
+      color: #e5e5e5;
+    }
+    .full-screen-icon.vs-dark svg:hover,
+    .full-screen-icon-cancel.vs-dark svg:hover,
+    .full-screen-icon.hc-black svg:hover,
+    .full-screen-icon-cancel.hc-black svg:hover {
+      color: #fff;
+    }
+  }
+
+  .syntaxTips {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 234, 234, 0.8);
+    color: red;
+    padding: 10px 30px;
+    margin: 0;
+    transition: 0.2s ease max-height;
+    max-height: 0;
+    box-sizing: border-box;
+  }
+
+  .syntaxTips:hover {
+    max-height: 50%;
+    overflow: auto;
+  }
+
+  .syntaxTips {
+    .infoIcon {
+      position: absolute;
+      width: 20px;
+      height: 16px;
+      top: 2px;
+      right: 5px;
+      transform: rotateY(180deg);
+    }
+  }
+}
+
+
+body.fullScreen-overflow-hidden {
+  overflow: hidden;
+}
+
+@keyframes dots {
+  0% {
+    content: ".";
+  }
+  20% {
+    content: "..";
+  }
+  40% {
+    content: "...";
+  }
+  60% {
+    content: "....";
+  }
+  80% {
+    content: ".....";
+  }
+}
