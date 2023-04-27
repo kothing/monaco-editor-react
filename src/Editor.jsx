@@ -8,7 +8,7 @@ import {
   EDITOR_INITIALIZING_WORD,
   ICON,
 } from "./helper";
-import "./style.css";
+import "./style.less";
 
 /**
  * BaseEditor
@@ -53,9 +53,27 @@ export const BaseEditor = (props) => {
     [`theme-${theme}`]: theme,
   });
 
+  const getThemeByDom = () => {
+    let _theme = "";
+    if (editorRef.current) {
+      const editorDomNode = editorRef.current?.getDomNode();
+      if (editorDomNode.classList.contains("vs")) {
+        _theme = "vs";
+      } else if (editorDomNode.classList.contains("vs-dark")) {
+        _theme = "vs-dark";
+      } else if (editorDomNode.classList.contains("hc-light")) {
+        _theme = "hc-light";
+      } else if (editorDomNode.classList.contains("hc-black")) {
+        _theme = "hc-black";
+      }
+    }
+    return _theme;
+  };
+
   const fullScreenClassName = classNames({
     "full-screen-icon": !isFullScreen,
     "full-screen-icon-cancel": isFullScreen,
+    [getThemeByDom()]: getThemeByDom()
   });
 
   const style = useMemo(() => {
@@ -74,12 +92,9 @@ export const BaseEditor = (props) => {
     if (fullScreenStatusRef.current) {
       const editorInstance = editorRef.current;
       const editorElement = editorInstance?.getDomNode();
-
-      if (!editorElement) {
-        return;
+      if (editorElement) {
+        editorElement.style.height = `${window.innerHeight}px`;
       }
-
-      editorElement.style.height = `${window.innerHeight}px`;
       editorInstance?.layout();
     }
   };
