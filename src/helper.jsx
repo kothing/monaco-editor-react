@@ -62,7 +62,7 @@ export const EDITOR_CONTAINER_CLASS = "editor-container";
 
 export const CURRENT_LANGUAGE = (navigator.language || navigator.browserLanguage).toLowerCase().indexOf('zh') > -1 ? "zh-CN" : "en";
 
-export const EDITOR_INITIALIZING_WORD = CURRENT_LANGUAGE === "en" ? "Initializing Editor" : "编辑器初始化中";
+export const EDITOR_INITIALIZING_WORD = CURRENT_LANGUAGE === "zh-CN" ? "编辑器初始化中" : "Initializing Editor" ;
 
 export const ICON = {
   max: (
