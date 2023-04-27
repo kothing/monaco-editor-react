@@ -30,6 +30,9 @@ module.exports = defineConfig({
       formats: ["es", "cjs", "iife"],
       fileName: (format) => fileName[format],
     },
+    rollupOptions: {
+      output: { assetFileNames: `${packageName}.[ext]` },
+    },
   },
   plugins: [
     react({})
