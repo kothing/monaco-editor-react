@@ -196,7 +196,7 @@ export const BaseEditor = (props) => {
  * @returns
  */
 export const DiffEditor = (props) => {
-  const { enableOutline, width, height, language, theme, original } = props;
+  const { enableOutline, width, height, language, theme, value, original } = props;
 
   const {
     isEditorReady,
