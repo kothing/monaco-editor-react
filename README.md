@@ -42,7 +42,7 @@ React v16.x, v17.x, v18.x
 ### Diff Editor
 
 ```typescript
-<MonacoEditor.MonacoDiffEditor
+<MonacoEditor.DiffEditor
   original={JSON.stringify({a: 1}, null, 2)}
   value={JSON.stringify({b: 2}, null, 2)}
   height="100px"
@@ -55,7 +55,7 @@ React v16.x, v17.x, v18.x
 ```jsx
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import MonacoEditor from 'lyove/MonacoEditor';
+import MonacoEditor from '@/MonacoEditor';
 
 function App() {
   const [files, setFiles] = React.useState({
