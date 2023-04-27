@@ -179,7 +179,7 @@ export default class Editor extends React.Component {
         <hr />
         <br />
         Diff Usage
-        <MonacoEditor.MonacoDiffEditor
+        <MonacoEditor.DiffEditor
           original={JSON.stringify({ a: 1 }, null, 2)}
           value={JSON.stringify({ b: 2 }, null, 2)}
           height={"100px"}
@@ -224,7 +224,7 @@ export default class Editor extends React.Component {
               this.setValue(next);
             }}
           />
-          <MonacoEditor.MonacoDiffEditor
+          <MonacoEditor.DiffEditor
             height={40}
             value={code}
             options={{ readOnly: true }}
