@@ -31,7 +31,7 @@ module.exports = defineConfig({
       fileName: (format) => fileName[format],
     },
     rollupOptions: {
-      output: { assetFileNames: `${packageName}.[ext]` },
+      output: { assetFileNames: `${getPackageNameCamelCase()}.[ext]` },
     },
   },
   plugins: [
