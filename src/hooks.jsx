@@ -37,12 +37,13 @@ export const usePrevious = (value) => {
  * @param {*} props
  * @returns
  */
-export const useEditor = (type, props) => {
+export const useEditor = (props, type) => {
   const {
     editorDidMount,
     editorWillMount,
     theme,
     value,
+    original,
     path,
     language,
     saveViewState,
@@ -57,6 +58,7 @@ export const useEditor = (type, props) => {
 
   const defaultValueRef = useRef(defaultValue);
   const valueRef = useRef(value);
+  const originalRef = useRef(original);
   const languageRef = useRef(language || "text");
   const pathRef = useRef(path);
   const optionRef = useRef(props.options);
@@ -103,7 +105,26 @@ export const useEditor = (type, props) => {
         }
 
         let editor;
-        if (typeRef.current === "single") {
+        if (typeRef.current === "diff") {
+          const originalModel = monaco.editor.createModel(
+            originalRef.current,
+            languageRef.current
+          );
+          const modifiedModel = monaco.editor.createModel(
+            valueRef.current,
+            languageRef.current
+          );
+          editor = monaco.editor.createDiffEditor(
+            containerRef.current,
+            {
+              automaticLayout: true,
+              ...DIFF_EDITOR_INITIAL_OPTIONS,
+              ...optionRef.current,
+            },
+            overrideServices
+          );
+          editor.setModel({ original: originalModel, modified: modifiedModel });
+        } else {
           const model = getOrCreateModel(
             monaco,
             valueRef.current ?? defaultValueRef.current ?? "",
@@ -120,28 +141,8 @@ export const useEditor = (type, props) => {
             overrideServices
           );
           editor.setModel(model);
-        } else {
-          const originalModel = monaco.editor.createModel(
-            valueRef.current,
-            languageRef.current
-          );
-          const modifiedModel = monaco.editor.createModel(
-            valueRef.current,
-            languageRef.current
-          );
-
-          editor = monaco.editor.createDiffEditor(
-            containerRef.current,
-            {
-              automaticLayout: true,
-              ...DIFF_EDITOR_INITIAL_OPTIONS,
-              ...optionRef.current,
-            },
-            overrideServices
-          );
-
-          editor.setModel({ original: originalModel, modified: modifiedModel });
         }
+      
         editorRef.current = editor;
         (enhancersRef.current.enhancers || []).forEach((en) =>
           en(monaco, editor)
@@ -182,7 +183,8 @@ export const useEditor = (type, props) => {
 
   useEffect(() => {
     valueRef.current = value;
-  }, [value]);
+    originalRef.current = original;
+  }, [value, original]);
 
   useEffect(() => {
     languageRef.current = language;
