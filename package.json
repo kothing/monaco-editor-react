@@ -2,14 +2,7 @@
   "name": "monaco-editor-react",
   "private": true,
   "version": "0.0.1",
-  "main": "./dist/monaco-editor-react.cjs",
-  "module": "./dist/monaco-editor-react.mjs",
-  "exports": {
-    ".": {
-      "require": "./dist/monaco-editor-react.cjs",
-      "import": "./dist/monaco-editor-react.mjs"
-    }
-  },
+  "main": "./dist/monaco-editor-react.umd.js",
   "homepage": "https://github.com/kothing/monaco-editor-react#readme",
   "repository": {
     "type": "git",
