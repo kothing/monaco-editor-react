@@ -42,7 +42,8 @@ React v16.x, v17.x, v18.x
 ### Diff Editor
 
 ```typescript
-<MonacoEditor.DiffEditor
+const { DiffEditor } = MonacoEditor;
+<MonacoEditor
   original={JSON.stringify({a: 1}, null, 2)}
   value={JSON.stringify({b: 2}, null, 2)}
   height="100px"
