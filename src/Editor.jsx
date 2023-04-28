@@ -107,7 +107,7 @@ export const BaseEditor = (props) => {
       editorRef.current?.getModel()?.dispose();
       editorRef.current?.dispose();
       window.removeEventListener("resize", setEditorHeight);
-    }
+    };
   }, []);
 
   useEffect(() => {
