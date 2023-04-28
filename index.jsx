@@ -10,22 +10,20 @@ import com.alibaba.security.freud.export.script.PortrayScript
 import com.alibaba.umid.commons.script.test.Debugger
 
 /**
- * 刻画脚本Demo
+ * PortrayScript
  *
- * @author pinghe.cph
- * @since 2022-11-23
+ * @author lyove
+ * @since 2023-01-01
  */
-class PortayScriptDemo2 implements PortrayScript {
+class PortrayScript {
 
     @Override
     void portray(Map<String, Object> systemContext,
                  Map<String, Object> userContext,
                  Map<String, Object> attribute) {
 
-        // 保持刻画结果至「个体属性」中
         attribute.put("user_isChild", true)
 
-        // 打印调试日志
         println("[PortayScriptDemo2] User Context: " + JSON.toJSONString(userContext))
         println("[PortayScriptDemo2] attribute: " + JSON.toJSONString(attribute))
         Debugger.info("[PortayScriptDemo2] User Context: " + JSON.toJSONString(userContext))
@@ -42,7 +40,7 @@ export default class App extends PureComponent {
       <MonacoEditor
         language="html"
         value="<h1>I  react-monaco-editor</h1>"
-        theme="vs-dark",
+        theme="vs-dark"
         options={{
           selectOnLineNumbers: true,
           roundedSelection: false,
@@ -101,9 +99,7 @@ export default class Editor extends React.Component {
         return;
       }
 
-      const lineHeight = editor.getOption(
-        monaco.editor.EditorOption.lineHeight
-      );
+      const lineHeight = editor.getOption(monaco.editor.EditorOption.lineHeight);
       const lineCount = editor.getModel()?.getLineCount() || 1;
       const height = editor.getTopForLineNumber(lineCount + 1) + lineHeight;
 
@@ -163,110 +159,159 @@ export default class Editor extends React.Component {
     };
 
     return (
-      <div className="editor-test">
-        Basic Usage
-        <MonacoEditor
-          // height={"200px"}
-          language="javascript"
-          editorDidMount={this.editorDidMount.bind(this)}
-          onChange={this.onChange.bind(this)}
-          value={code}
-          options={options}
-          theme="vs" // "vs-dark"
-          supportFullScreen
-        />
-        <br />
-        <hr />
-        <br />
-        Diff Usage
-        <MonacoEditor.DiffEditor
-          original={JSON.stringify({ a: 1 }, null, 2)}
-          value={JSON.stringify({ b: 2 }, null, 2)}
-          height={"100px"}
-          theme="light"
-          language="json"
-        />
-        <br />
-        {/* =====================================================
-        <br />
-        Controlled Value
-        <div className="controlled">
-          <button
-            onClick={() => {
-              this.setValue('{ "a": 1 }');
-              this.setLanguage("json");
-            }}
-          >
-            Fill json data
-          </button>
-          <button
-            onClick={() => {
-              this.setValue("var a = 1");
-              this.setLanguage("javascript");
-            }}
-          >
-            Fill javascript data
-          </button>
-          <button
-            onClick={() => {
-              this.setValue("SELECT * from table where id = 1");
-              this.setLanguage("sql");
-            }}
-          >
-            Fill sql data
-          </button>
-          <MonacoEditor
-            height={40}
-            value={code}
-            language={language}
-            options={{ readOnly: true }}
-            onChange={(next) => {
-              this.setValue(next);
-            }}
-          />
-          <MonacoEditor.DiffEditor
-            height={40}
-            value={code}
-            options={{ readOnly: true }}
-            language={language}
-          />
-        </div>
-        <br />
-        =====================================================
-        <br />
-        Multi model
-        <div className="multi">
-          {Object.keys(files).map((key) => (
-            <button
-              key={key}
-              disabled={key === fileName}
-              onClick={() => {
-                this.setState({
-                  fileName: key,
-                });
+      <>
+        <nav className="header">
+          <span className="nav-item">
+            <a href="/">Home</a>
+          </span>
+          <span>
+            <a href="https://github.com/kothing/monaco-editor-react/blob/master/README.md">
+              Documentation
+            </a>
+          </span>
+          <span className="nav-item">
+            <a href="https://github.com/kothing/monaco-editor-react">Github</a>
+          </span>
+        </nav>
+        <div className="editor-demo">
+          <div className="feature">
+            <h1>MonacoEditor react</h1>
+            <div className="desc">
+              React component for MonacoEditor without needing to use webpack plugins
+            </div>
+          </div>
+
+          <div className="section">
+            <div className="lable-title">Basic Usage</div>
+            <MonacoEditor
+              height={"300px"}
+              language="javascript"
+              editorDidMount={this.editorDidMount.bind(this)}
+              onChange={this.onChange.bind(this)}
+              value={code}
+              options={options}
+              theme="vs" // "vs-dark"
+              supportFullScreen
+              enableOutline
+            />
+            <br />
+            <div>
+              Code
+              <pre>
+                {`<MonacoEditor
+  height="300px"
+  language="javascript"
+  editorDidMount={this.editorDidMount.bind(this)}
+  onChange={this.onChange.bind(this)}
+  value={code}
+  options={options}
+  theme="vs" // "vs-dark"
+  supportFullScreen
+  enableOutline
+/>
+`}
+              </pre>
+            </div>
+          </div>
+          <br />
+
+          <div className="section">
+            <div className="lable-title">Diff Usage</div>
+            <MonacoEditor.DiffEditor
+              original={JSON.stringify({ a: 1 }, null, 2)}
+              modified={JSON.stringify({ b: 2 }, null, 2)}
+              height={"100px"}
+              theme="light"
+              language="json"
+              enableOutline
+            />
+          </div>
+          <br />
+
+          <div className="section">
+            <div className="lable-title">Controlled Value</div>
+            <div className="controlled">
+              <div className="btn-group mb8">
+                <button
+                  className="btn mr12"
+                  onClick={() => {
+                    this.setValue('{ "a": 1 }');
+                    this.setLanguage("json");
+                  }}
+                >
+                  Fill json data
+                </button>
+                <button
+                  className="btn mr12"
+                  onClick={() => {
+                    this.setValue("var a = 1");
+                    this.setLanguage("javascript");
+                  }}
+                >
+                  Fill javascript data
+                </button>
+                <button
+                  className="btn"
+                  onClick={() => {
+                    this.setValue("SELECT * from table where id = 1");
+                    this.setLanguage("sql");
+                  }}
+                >
+                  Fill sql data
+                </button>
+              </div>
+              <MonacoEditor
+                height={40}
+                value={code}
+                language={language}
+                options={{ readOnly: true }}
+                onChange={(next) => {
+                  this.setValue(next);
+                }}
+                enableOutline
+              />
+            </div>
+          </div>
+          <br />
+
+          <div className="section">
+            <div className="label-title">Multi model</div>
+            <div className="btn-group mb8">
+              {Object.keys(files).map((key) => (
+                <button
+                  className="btn mr12"
+                  key={key}
+                  disabled={key === fileName}
+                  onClick={() => {
+                    this.setState({
+                      fileName: key,
+                    });
+                  }}
+                >
+                  {key}
+                </button>
+              ))}
+            </div>
+            <MonacoEditor
+              height={40}
+              path={file.name}
+              language={file.language}
+              defaultValue={file.value}
+              saveViewState
+              onChange={(next) => {
+                this.setState((v) => ({
+                  ...v,
+                  [file.name]: {
+                    ...v[file.name],
+                    value: next,
+                  },
+                }));
               }}
-            >
-              {key}
-            </button>
-          ))}
-          <MonacoEditor
-            height={40}
-            path={file.name}
-            language={file.language}
-            defaultValue={file.value}
-            saveViewState
-            onChange={(next) => {
-              this.setState((v) => ({
-                ...v,
-                [file.name]: {
-                  ...v[file.name],
-                  value: next,
-                },
-              }));
-            }}
-          />
-        </div> */}
-      </div>
+              enableOutline
+            />
+          </div>
+        </div>
+      </>
     );
   }
 }
@@ -275,5 +320,5 @@ ReactDOM.render(
   <React.StrictMode>
     <Editor />
   </React.StrictMode>,
-  document.getElementById("app")
+  document.getElementById("app"),
 );
