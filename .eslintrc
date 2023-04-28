@@ -13,6 +13,17 @@
     "node": true
   },
   "rules": {
-    "prettier/prettier": "error"
+    "prettier/prettier": [
+      "error",
+      {
+        "semi": true,
+        "trailingComma": "all",
+        "singleQuote": false,
+        "printWidth": 100,
+        "tabWidth": 2,
+        "comma-dangle": [1, "always-multiline"],
+        "endOfLine": "auto"
+      }
+    ]
   }
 }
