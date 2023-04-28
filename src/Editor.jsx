@@ -229,13 +229,13 @@ export const DiffEditor = (props) => {
   const style = useMemo(() => ({ width, height }), [width, height]);
 
   useEffect(() => {
-    const editorInstance = editorRef.current;
     return () => {
+      const editorInstance = editorRef.current;
       if (editorInstance) {
-        const md = editorInstance.getModel();
-        if (md) {
-          md.original.dispose();
-          md.modified.dispose();
+        const currentModel = editorInstance.getModel();
+        if (currentModel) {
+          currentModel.original.dispose();
+          currentModel.modified.dispose();
         }
         editorInstance.dispose();
       }
