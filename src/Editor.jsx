@@ -41,7 +41,7 @@ export const BaseEditor = (props) => {
     monacoRef,
     editorRef,
     valueRef,
-  } = useEditor("single", props);
+  } = useEditor(props);
 
   const wrapperClassName = classNames(EDITOR_WRAPPER_CLASS, props.className, {
     "ve-focused": focused,
@@ -196,8 +196,13 @@ export const BaseEditor = (props) => {
  * @returns
  */
 export const DiffEditor = (props) => {
-  const { enableOutline, width, height, language, theme, value, original } = props;
+  const { enableOutline, width, height, language, theme, modified, original } = props;
 
+  const newProps = {
+    ...props,
+    value: modified
+  };
+  
   const {
     isEditorReady,
     focused,
@@ -205,7 +210,7 @@ export const DiffEditor = (props) => {
     containerRef,
     monacoRef,
     editorRef,
-  } = useEditor("diff", props);
+  } = useEditor(newProps, "diff");
 
   const wrapperClassName = classNames(EDITOR_WRAPPER_CLASS, props.className, {
     "ve-focused": focused,
@@ -238,16 +243,6 @@ export const DiffEditor = (props) => {
     }
     editorRef.current.getModel().original.setValue(original ?? "");
   }, [isEditorReady, original]);
-
-  useEffect(() => {
-    if (!isEditorReady) {
-      return;
-    }
-    const modifiedEditor = editorRef.current.getModifiedEditor();
-    if (modifiedEditor.getOption(monacoRef.current.editor.EditorOption.readOnly)) {
-      modifiedEditor.setValue(value || "");
-    }
-  }, [isEditorReady, value]);
 
   useEffect(() => {
     if (!isEditorReady) {
