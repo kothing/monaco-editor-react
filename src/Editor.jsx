@@ -102,7 +102,12 @@ export const BaseEditor = (props) => {
   useEffect(() => {
     window.addEventListener("resize", setEditorHeight);
 
-    return () => window.removeEventListener("resize", setEditorHeight);
+    return () => {
+      subscriptionRef.current?.dispose();
+      editorRef.current?.getModel()?.dispose();
+      editorRef.current?.dispose();
+      window.removeEventListener("resize", setEditorHeight);
+    }
   }, []);
 
   useEffect(() => {
