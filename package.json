@@ -10,8 +10,8 @@
   },
   "scripts": {
     "dev": "vite --host --open",
-    "lib": "tsc && vite build --config vite.prod.config.ts",
     "build": "tsc && vite build",
+    "build:lib": "tsc && vite build --config vite.lib.config.ts",
     "test": "jest --runInBand",
     "test:coverage": "jest --runInBand --coverage",
     "lint:scripts": "eslint . --ext .ts",
