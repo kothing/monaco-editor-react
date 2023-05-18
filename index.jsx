@@ -175,7 +175,7 @@ export default class Editor extends React.Component {
         </nav>
         <div className="editor-demo">
           <div className="feature">
-            <h1>Monaco-Editor-React</h1>
+            <h1>React-Monaco-Editor</h1>
             <div className="desc">
               React component for MonacoEditor without needing to use webpack plugins
             </div>
